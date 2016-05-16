@@ -79,3 +79,19 @@ echo \mirage\basicfilemanager\widgets\ModalBrowser::widget([
 ?>
 ```
 
+If you want effect after selected file please register javascript to view 
+```php
+<?php
+$this->registerJS("
+function after_selected_function(){
+    alert('After selected first.');
+}
+", $this::POS_HEAD);
+
+$this->registerJS("
+function modalAvatar_after_selected_function(){
+    alert('After selected second.');
+}
+", $this::POS_HEAD);
+?>
+```
