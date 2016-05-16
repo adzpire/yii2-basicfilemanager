@@ -54,7 +54,7 @@ Standalone
 <?php
 echo \mirage\basicfilemanager\widgets\ModalBrowser::widget([
     'browserUrl' => '/basicfilemanager',
-    'fieldID' => $fieldID,
+    'fieldID' => 'profile-avatar',
     'returnType' => 'basename', //url(default), absolute, behind, basename
         //url คือ ที่อยู่ของไฟล์ (/uploads/images/abc.jpg),
         //absolute คือ ที่อยู่ของไฟล์แบบเต็ม (http://www.example.com/uploads/images/abc.jpg),
