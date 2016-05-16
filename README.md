@@ -61,7 +61,7 @@ echo \mirage\basicfilemanager\widgets\ModalBrowser::widget([
         //behind คือ ที่ตั้งไฟล์โดยเริ่มนับจากหลังคอนฟิคไดเรคทอรี่อัพโหลด (images/abc.jpg),
         //basename คือ ใช้ชื่อไฟล์อ่างเดียว (abc.jpg)
     'options' => [
-        'subDir' => 'user/10/cover', //บังคับเข้า dir ตามค่า (default='')
+        'subDir' => 'user/10/avatar', //บังคับเข้า dir ตามค่า (default='')
         'changeDir' => false, //การอนุญาตให้เปลี่ยน dir ได้ (default=true)
         'createDir' => false, //การอนุญาติให้สร้าง dir ได้ (default=true)
         'upload' => false, //การอนุญาติให้ upload ได้ (default=true)
@@ -71,8 +71,8 @@ echo \mirage\basicfilemanager\widgets\ModalBrowser::widget([
         'id' => 'modalAvatar',
         'toggleButton' => [
             'label' => '<i class="glyphicon glyphicon-picture"></i>', 
-            'id' => 'cover-btn-browse',
-            'class'=>'btn btn-default btn-change-cover'
+            'id' => 'avatar-btn-browse',
+            'class'=>'btn btn-default btn-change-avatar'
         ],
     ],
 ]);
