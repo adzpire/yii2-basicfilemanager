@@ -14,7 +14,7 @@ composer require miragesoft/yii2-basicfilemanager "dev-master"
 or add
 
 ```
-"kuakling/yii2-basicfilemanager": "dev-master"
+"miragesoft/yii2-basicfilemanager": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
