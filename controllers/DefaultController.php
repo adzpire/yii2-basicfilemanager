@@ -39,19 +39,19 @@ class DefaultController extends Controller
 		$this->layout = 'main-error';
 		$exception = Yii::$app->errorHandler->exception;
 
-	    if ($exception !== null) {
+		if ($exception !== null) {
 			$statusCode = $exception->statusCode;
 			$name = $exception->getName();
 			$message = $exception->getMessage();
-	        
-	        
+			
+			
 			return $this->render('error', [
 				'exception' => $exception,
 				'statusCode' => $statusCode,
 				'name' => $name,
 				'message' => $message
 			]);
-	    }
+		}
 	}
 
 	/**
