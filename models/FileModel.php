@@ -1,9 +1,11 @@
 <?php
 
-namespace mirage\basicfilemanager\models;
+namespace adzpire\basicfilemanager\models;
 
 use Yii;
 
+use yii\imagine\Image;  //adzpire edit
+use Imagine\Image\Box;
 class FileModel extends \yii\db\ActiveRecord
 {
 
@@ -92,12 +94,23 @@ class FileModel extends \yii\db\ActiveRecord
     }
 
 
-    public function upload($subDir='')
+    public function upload($subDir='', array $imagine = NULL)
     {
-        $dir = $this->routes->uploadDir.'/'.$subDir.'/';
-        if ($this->validate()) { 
+        $dir = rtrim($this->routes->uploadDir, '/').'/'.trim($subDir,'/').'/';
+        //print_r($imagine);
+        //exit;
+        if ($this->validate()) {
             foreach ($this->files as $file) {
                 $file->saveAs($dir . $file->baseName . '.' . $file->extension);
+                //adzpire
+                if(is_array($imagine)){  // set resize
+//                    $isResize = $imagine['keepratio'];
+                    $resizeSize = $imagine['width'];
+                    $imagine = Image::getImagine();
+                    $image = $imagine->open($dir . $file);
+                    $image->resize($image->getSize()->widen($resizeSize))->save($dir .time().'_'. $file->baseName . '.' . $file->extension, ['quality' => 70]);
+                    @unlink($dir . $file);
+                }
             }
             return true;
         } else {

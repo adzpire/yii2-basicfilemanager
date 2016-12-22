@@ -1,10 +1,12 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\Json;
 use yii\bootstrap\ActiveForm;
-use mirage\basicfilemanager\components\FileHelper;
+use adzpire\basicfilemanager\components\FileHelper;
 
 $request = Yii::$app->request;
+//print_r($request->getQueryParams());
 ?>
 <?php
 $allowUpload = false;
@@ -16,6 +18,12 @@ $allowCreateDir = false;
 if($request->get('createDir') || $request->get('createDir') === null){
 	$allowCreateDir = true;
 }
+$allowCreateDir = false;
+if($request->get('createDir') || $request->get('createDir') === null){
+	$allowCreateDir = true;
+}
+
+
 ?>
 <div class="basicfilemanager">
 	<div class="waiting">
@@ -28,8 +36,9 @@ if($request->get('createDir') || $request->get('createDir') === null){
 	<div class="uploader well well-sm">
 		<div class="row">
 			<div class="col-xs-6">
+				<?php //echo ($request->get('selectFileOnly')) ? '123' : '456'; ?>
 				<?php if($allowUpload){ ?>
-				<?php $form = ActiveForm::begin(['action' => ['upload'], 'options' => ['enctype' => 'multipart/form-data']]); ?>
+				<?php $form = ActiveForm::begin(['action' => array_merge(['upload'], Yii::$app->request->queryParams), 'options' => ['enctype' => 'multipart/form-data']]); ?>
 			<?= $form->field($model, 'files[]', ['options'=>['class'=>'uploadfiles']])->fileInput(['multiple' => true,])->label('Upload File') ?>
 				Upload
 				<div class="input-group">
@@ -97,11 +106,18 @@ if($request->get('createDir') || $request->get('createDir') === null){
 $itemListUrl = Url::to(['item-list']);
 $changeDirUrl = Url::to(['change-directory']);
 $navDirUrl = Url::to(['nav-directory']);
-$itemInfoUrl = Url::to(['item-info']);
+$itemInfoUrl = Url::to(['item-info', 'selectFileOnly' => $request->get('selectFileOnly')]);
 $fileRenameUrl = Url::to(['item-rename']);
 $fileDeleteUrl = Url::to(['item-delete']);
 $createDirUrl = Url::to(['create-directory']);
 $fileBrowseId = Html::getInputId($model, 'files');
+
+$changeDir = $request->get('changeDir');
+$params = $request->getQueryParams();
+if(isset($params['subDir'])){
+	unset($params['subDir']);
+}
+$queryParams = Json::encode($params);
 
 $fieldID = $request->get('fieldID');
 $modalID = $request->get('modalID');
@@ -140,11 +156,12 @@ $(document).on('submit', '#$form->id', function(e) {
 		type:'POST',
 		url: $(this).attr('action'),
 		data:formData,
-		dataType: 'json',
+		//dataType: 'json',
 		cache:false,
 		contentType: false,
 		processData: false,
 		success:function(data){
+			console.log(data.var);
 			if(data.process){
 				loadfilelist();
 			}else{
@@ -172,7 +189,7 @@ $(document).on('click', '.basicfilemanager .item', function(e) {
 });
 JS;
 
-if($request->get('changeDir')){
+//if($request->get('changeDir')){
 $js['change-dir'] = <<<JS
 $(document).on('dblclick', '.basicfilemanager .item.folder', function(e) {
 	e.preventDefault();
@@ -198,9 +215,9 @@ $(document).on('click', '.nav-dir', function(e) {
 	});
 });
 JS;
-}
+//}
 
-if($request->get('fieldID')){
+//if($request->get('fieldID')){
 	$modalId = $request->get('modalID');
 	$afterFnc = $modalId.'_after_selected_function';
 	$session = Yii::$app->session;
@@ -211,6 +228,9 @@ if($request->get('fieldID')){
 	}
 	$uploadUrl = Yii::$app->homeUrl.$model->routes->uploadPath.'/'.$model->routes->baseUrl;
 	$returnType = $request->get('returnType');
+	$callbackValue = '';
+	$callbackValue .= ($request->get('fieldID')) ? "inputField.val(returnVal);\nmodal.modal('toggle');\n" : null;
+	$callbackValue .= ($request->get('CKEditor')) ? "returnFileUrl(returnVal);\n" : null;
 	$js['action-select'] = <<<JS
 $(document).on('click', '.select-item', function(e) {
 	e.preventDefault();
@@ -243,8 +263,7 @@ $(document).on('click', '.select-item', function(e) {
 			break;
 
 	}
-	inputField.val(returnVal);
-	modal.modal('toggle');
+	$callbackValue
 	
 	if(jQuery.isFunction(parent.after_selected_function)){
 		parent.after_selected_function();
@@ -253,7 +272,6 @@ $(document).on('click', '.select-item', function(e) {
 	if(jQuery.isFunction(parent.$afterFnc)){
 		parent.$afterFnc();
 	}
-	//alert(returnVal);
 });
 
 
@@ -263,7 +281,7 @@ $(document).on('dblclick', '.basicfilemanager .item.file', function(e) {
 	$('.select-item').trigger("click");
 });
 JS;
-}
+//}
 
 $js['action-rename'] = <<<JS
 $(document).on('click', '.rename-item', function(e) {
@@ -311,7 +329,7 @@ $(document).on('click', '.form-reset', function(e) {
 });
 JS;
 
-if($request->get('createDir')){
+//if($request->get('createDir')){
 $js['action-create-dir'] = <<<JS
 $(document).on('click', '.create-dir', function(e) {
 	e.preventDefault();
@@ -332,7 +350,7 @@ $(document).on('click', '.create-dir', function(e) {
 	}
 });
 JS;
-}
+//}
 
 if($allowUpload){
 $js['action-after-choose'] = <<<JS
@@ -390,25 +408,28 @@ $this->registerJs("
 });*/
 ");
 
-$changeDir = $request->get('changeDir');
-$params = $request->getQueryParams();
-if(isset($params['subDir'])){
-	unset($params['subDir']);
-}
-$queryParams = \yii\helpers\Json::encode($params);
+
 $jsHead['loadfilelist'] = <<<JSHEAD
 function loadfilelist(subdir=''){
-	/*var sendData = {};
-	if(subdir !== ''){
-		sendData = { subDir: subdir, changeDir: $changeDir };
-	}
-	$.get( "$itemListUrl", sendData, function( data ) {
-		$( ".item-list" ).html( data );
-	});*/
-	//alert('$queryParams');
 	$.get( "$itemListUrl", $queryParams, function( data ) {
 		$( ".item-list" ).html( data );
 	});
+}
+
+// Helper function to get parameters from the query string.
+function getUrlParam( paramName ) {
+	var reParam = new RegExp( '(?:[\?&]|&)' + paramName + '=([^&]+)', 'i' );
+	var match = window.location.search.match( reParam );
+
+	return ( match && match.length > 1 ) ? match[1] : null;
+}
+
+// Simulate user action of selecting a file to be returned to CKEditor.
+function returnFileUrl(val) {
+
+	var funcNum = getUrlParam( 'CKEditorFuncNum' );
+	window.opener.CKEDITOR.tools.callFunction( funcNum, val );
+	window.close();
 }
 JSHEAD;
 

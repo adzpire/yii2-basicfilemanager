@@ -1,25 +1,29 @@
-<div class="row">
-<?php //print_r($itemInfo) ?>
-</div>
+
 <div class="action">
 	<input type="hidden" value="<?= $itemInfo['filepath']; ?>" class="txt-dirname"></input>
 	<input type="hidden" value="<?= $itemInfo['basename']; ?>" class="txt-basename"></input>
 	<?php if(!empty(Yii::$app->request->get('fieldID'))){ ?>
 	<!--<button class="btn btn-primary select-item"><i class="
-glyphicon glyphicon-ok"></i> Select</button>
+glyphicon glyphicon-ok"></i> Select</button> -->
 	<?php } ?>
-	<button class="btn btn-info rename-item"><i class="glyphicon glyphicon-pencil"></i> Rename</button>
-	<button class="btn btn-danger delete-file"><i class="glyphicon glyphicon-trash"></i> Delete</button>-->
+
+	<?php /*if(Yii::$app->request->get('selectFileOnly')) {
+		echo '1';
+	}else{
+		echo '2';
+	}*/ ?>
 	<div class="btn-group btn-group-justified" role="group" aria-label="Actions">
 		<a href="#!" class="btn btn-primary select-item">
 			<i class="glyphicon glyphicon-ok"></i> Select
 		</a>
+		<?php if(!Yii::$app->request->get('selectFileOnly')) { ?>
 		<a href="#!" class="btn btn-info rename-item">
 			<i class="glyphicon glyphicon-pencil"></i> Rename
 		</a>
 		<a href="#!" class="btn btn-danger delete-file">
 			<i class="glyphicon glyphicon-trash"></i> Delete
 		</a>
+		<?php } ?>
 	</div>
 </div>
 <table  class="table table-striped table-bordered detail-view table-nowrap">

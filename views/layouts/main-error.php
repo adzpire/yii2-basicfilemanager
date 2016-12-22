@@ -6,7 +6,7 @@
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use yii\helpers\ArrayHelper;
-use mirage\basicfilemanager\assets\AppAsset;
+use adzpire\basicfilemanager\assets\AppAsset;
 
 AppAsset::register($this);
 ?>

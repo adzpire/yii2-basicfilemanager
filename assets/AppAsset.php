@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace mirage\basicfilemanager\assets;
+namespace adzpire\basicfilemanager\assets;
 
 use yii\web\AssetBundle;
 

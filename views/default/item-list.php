@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
-use mirage\basicfilemanager\components\FileHelper;
+use adzpire\basicfilemanager\components\FileHelper;
 ?>
 
 <?php 
@@ -63,9 +63,7 @@ if($request->get('changeDir')){
 		</div>
 		<div class="col-xs-4">
 			<h3>Properties</h3>
-			<div class="file-info">
-
-			</div>
+			<div class="file-info"></div>
 		</div>
 	</div>
 </div>

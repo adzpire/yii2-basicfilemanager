@@ -1,6 +1,6 @@
 <?php
 
-namespace mirage\basicfilemanager\controllers;
+namespace adzpire\basicfilemanager\controllers;
 
 use Yii;
 use yii\web\Controller;
@@ -8,7 +8,7 @@ use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 use yii\helpers\Json;
 
-use mirage\basicfilemanager\models\FileModel;
+use adzpire\basicfilemanager\models\FileModel;
 
 /**
  * Default controller for the `yiipress` module
@@ -187,10 +187,13 @@ class DefaultController extends Controller
 		if (Yii::$app->request->isPost) {
 			$session = Yii::$app->session;
 			$model->files = UploadedFile::getInstances($model, 'files');
-			if ($model->upload($session->get($this->module->id)['path'])) {
+			$resizeOptions = Yii::$app->request->get('resizeOptions');
+			//if ($model->upload($session->get($this->module->id)['path'])) {
+			if ($model->upload($session->get($this->module->id)['path'], $resizeOptions)) {
 				// file is uploaded successfully
 				$result['process'] = true;
 				$result['message'] = 'Your files has been uploaded';
+				$result['var'] = $resizeOptions;
 			}
 		}
 

@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace mirage\basicfilemanager\assets;
+namespace adzpire\basicfilemanager\assets;
 
 use yii\web\AssetBundle;
 
@@ -15,7 +15,7 @@ use yii\web\AssetBundle;
  */
 class BfmAsset extends AssetBundle
 {
-    public $sourcePath = '@mirage/basicfilemanager/client';
+    public $sourcePath = '@adzpire/basicfilemanager/client';
     public $css = [
     	'css/style.css',
     ];

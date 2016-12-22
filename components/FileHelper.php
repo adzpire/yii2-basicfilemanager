@@ -1,10 +1,10 @@
 <?php
-namespace mirage\basicfilemanager\components;
+namespace adzpire\basicfilemanager\components;
 
 use Yii;
 use yii\web\UploadedFile;
 
-use mirage\basicfilemanager\models\FileModel;
+use adzpire\basicfilemanager\models\FileModel;
 /**
 * 
 */
@@ -20,9 +20,14 @@ class FileHelper extends \yii\helpers\FileHelper
 	public static function path2url($fullName='')
 	{
 		$model = new FileModel();
-		$r = Yii::$app->homeUrl;
-		$r .= str_replace($model->routes->basePath.'/', '', $fullName);
-		return $r;
+		$basePath = realpath($model->routes->basePath);
+		$fullName = realpath($fullName);
+		$r = $model->routes->baseUrl;
+
+		$r = str_replace($basePath, '', $fullName);
+		$fileUrl = str_replace('\\', '/', $r);
+
+		return $fileUrl;
 	}
 
 	public static function isImage($file)
@@ -89,7 +94,7 @@ class FileHelper extends \yii\helpers\FileHelper
 	{
 		if(self::$bfmAsset === null){
 			$view = Yii::$app->controller->getView();
-			self::$bfmAsset = \mirage\basicfilemanager\assets\BfmAsset::register($view);
+			self::$bfmAsset = \adzpire\basicfilemanager\assets\BfmAsset::register($view);
 		}
 	}
 }
