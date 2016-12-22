@@ -8,13 +8,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-composer require miragesoft/yii2-basicfilemanager "dev-master"
+composer require adzpire/yii2-basicfilemanager "dev-master"
 ```
 
 or add
 
 ```
-"miragesoft/yii2-basicfilemanager": "dev-master"
+"adzpire/yii2-basicfilemanager": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
@@ -30,7 +30,7 @@ Config
     'modules' => [
         ...
         'basicfilemanager' => [
-            'class' => 'mirage\basicfilemanager\Module',
+            'class' => 'adzpire\basicfilemanager\Module',
             // Upload routes
             'routes' => [
                 // Base absolute path to web directory
@@ -52,7 +52,7 @@ Standalone
 ```
 ```php
 <?php
-echo \mirage\basicfilemanager\widgets\ModalBrowser::widget([
+echo \adzpire\basicfilemanager\widgets\ModalBrowser::widget([
     'browserUrl' => '/basicfilemanager',
     'fieldID' => 'profile-avatar',
     'returnType' => 'basename', //url(default), absolute, behind, basename
