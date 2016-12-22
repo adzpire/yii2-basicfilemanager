@@ -1,6 +1,6 @@
 <?php
 
-namespace mirage\basicfilemanager;
+namespace adzpire\basicfilemanager;
 
 use Yii;
 /**
@@ -11,7 +11,7 @@ class Module extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'mirage\basicfilemanager\controllers';
+    public $controllerNamespace = 'adzpire\basicfilemanager\controllers';
     
     public $routes = [];
     
@@ -25,7 +25,7 @@ class Module extends \yii\base\Module
         parent::init();
 
         // custom initialization code goes here
-        $this->layoutPath = '@mirage/basicfilemanager/views/layouts';
+        $this->layoutPath = '@adzpire/basicfilemanager/views/layouts';
         $this->layout = 'main';
 
         Yii::$app->errorHandler->errorAction = '/'.$this->id.'/default/error';
