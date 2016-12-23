@@ -1,6 +1,6 @@
 <?php
 
-namespace mirage\basicfilemanager\widgets;
+namespace adzpire\basicfilemanager\widgets;
 
 use Yii;
 use yii\helpers\Html;

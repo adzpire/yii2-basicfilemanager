@@ -159,7 +159,7 @@ class DefaultController extends Controller
 		$itemInfo = [
 			'basename' => basename($name),
 			'filepath' => trim($dirname, '/'),
-			'fileurl' => Yii::$app->homeUrl.$model->routes->uploadPath.$filePath,
+			'fileurl' => $model->routes->baseUrl.$model->routes->uploadPath.$filePath,
 			//'filesize' => 'N/A',
 			'fileatime' => @fileatime($fileFullPath), //accessed 
 			'filemtime' => @filemtime($fileFullPath), //modified 

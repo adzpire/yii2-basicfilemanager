@@ -24,7 +24,7 @@ class FileModel extends \yii\db\ActiveRecord
         }
 
         $arr = [
-            'baseUrl' => '',
+            'baseUrl' => Yii::$app->controller->module->routes['baseUrl'],
             'basePath' => $basePath,
             'uploadPath' => Yii::$app->controller->module->routes['uploadPath'],
         ];
@@ -60,7 +60,8 @@ class FileModel extends \yii\db\ActiveRecord
             $session->set($moduleId, ['path'=>'/'.ltrim($options['sub-directory'], '/')]);
         }
         //$session->remove($moduleId);
-        $dir = $this->routes->uploadDir.$session->get($moduleId)['path'];
+        $dir = rtrim($this->routes->uploadDir,'/').'/'.ltrim($session->get($moduleId)['path'],'/');
+        //echo $dir;exit;
         if(is_dir($dir)){
             //echo $dir;
             $files=\yii\helpers\FileHelper::findFiles($dir,['recursive'=>false]);

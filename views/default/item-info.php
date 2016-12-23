@@ -1,7 +1,6 @@
-
 <div class="action">
-	<input type="hidden" value="<?= $itemInfo['filepath']; ?>" class="txt-dirname"></input>
-	<input type="hidden" value="<?= $itemInfo['basename']; ?>" class="txt-basename"></input>
+	<input type="hidden" value="<?= $itemInfo['filepath']; ?>" class="txt-dirname">
+	<input type="hidden" value="<?= $itemInfo['basename']; ?>" class="txt-basename">
 	<?php if(!empty(Yii::$app->request->get('fieldID'))){ ?>
 	<!--<button class="btn btn-primary select-item"><i class="
 glyphicon glyphicon-ok"></i> Select</button> -->

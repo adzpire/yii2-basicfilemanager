@@ -22,11 +22,10 @@ class FileHelper extends \yii\helpers\FileHelper
 		$model = new FileModel();
 		$basePath = realpath($model->routes->basePath);
 		$fullName = realpath($fullName);
-		$r = $model->routes->baseUrl;
 
 		$r = str_replace($basePath, '', $fullName);
-		$fileUrl = str_replace('\\', '/', $r);
-
+		$fileUrl = $model->routes->baseUrl.str_replace('\\', '/', $r);
+//		print_r($model->routes);
 		return $fileUrl;
 	}
 
